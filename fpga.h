@@ -9,6 +9,7 @@ enum fpga_pin {
 	FP_RESET,
 	FP_DONE,
 	FP_CS,
+	FP_DRIVE,
 };
 
 #if 0

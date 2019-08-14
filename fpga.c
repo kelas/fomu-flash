@@ -15,6 +15,7 @@ struct ff_fpga {
         int reset;
         int done;
         int cs;
+        int drive;
     } pins;
 };
 
@@ -25,7 +26,9 @@ int fpgaDone(struct ff_fpga *fpga) {
 int fpgaResetSlave(struct ff_fpga *fpga) {
     // Put the FPGA into reset
     gpioSetMode(fpga->pins.reset, PI_OUTPUT);
+    gpioSetMode(fpga->pins.drive, PI_OUTPUT);
     gpioWrite(fpga->pins.reset, 0);
+    gpioWrite(fpga->pins.drive, 0);
 
     // Set the CS pin to a GPIO, which will let us control it
     gpioSetMode(fpga->pins.cs, PI_OUTPUT);
@@ -37,6 +40,7 @@ int fpgaResetSlave(struct ff_fpga *fpga) {
 
     // Bring the FPGA out of reset
     gpioWrite(fpga->pins.reset, 1);
+    gpioWrite(fpga->pins.drive, 1);
 
     usleep(1200); // 13.2.SPI Slave Configuration Process
 
@@ -52,7 +56,9 @@ int fpgaResetMaster(struct ff_fpga *fpga) {
 
     // Put the FPGA into reset
     gpioSetMode(fpga->pins.reset, PI_OUTPUT);
+    gpioSetMode(fpga->pins.drive, PI_OUTPUT);
     gpioWrite(fpga->pins.reset, 0);
+    gpioWrite(fpga->pins.drive, 0);
 
     // Set the CS pin to a GPIO, which will let us control it
     gpioSetMode(fpga->pins.cs, PI_OUTPUT);
@@ -64,6 +70,7 @@ int fpgaResetMaster(struct ff_fpga *fpga) {
 
     // Bring the FPGA out of reset
     gpioWrite(fpga->pins.reset, 1);
+    gpioWrite(fpga->pins.drive, 1);
 
     usleep(1200); // 13.2.SPI Slave Configuration Process
 
@@ -73,14 +80,18 @@ int fpgaResetMaster(struct ff_fpga *fpga) {
 int fpgaReset(struct ff_fpga *fpga) {
     // Put the FPGA into reset
     gpioSetMode(fpga->pins.reset, PI_OUTPUT);
+    gpioSetMode(fpga->pins.drive, PI_OUTPUT);
     gpioWrite(fpga->pins.reset, 0);
+    gpioWrite(fpga->pins.drive, 0);
     return 0;
 }
 
 int fpgaInit(struct ff_fpga *fpga) {
     // Put the FPGA into reset
     gpioSetMode(fpga->pins.reset, PI_OUTPUT);
+    gpioSetMode(fpga->pins.drive, PI_OUTPUT);
     gpioWrite(fpga->pins.reset, 0);
+    gpioWrite(fpga->pins.drive, 0);
 
     // Also monitor the C_DONE pin
     gpioSetMode(fpga->pins.done, PI_INPUT);
@@ -97,6 +108,7 @@ struct ff_fpga *fpgaAlloc(void) {
 void fpgaSetPin(struct ff_fpga *fpga, enum fpga_pin pin, int val) {
     switch (pin) {
     case FP_RESET: fpga->pins.reset = val; break;
+    case FP_DRIVE: fpga->pins.drive = val; break;
     case FP_DONE: fpga->pins.done = val; break;
     case FP_CS: fpga->pins.cs = val; break;
     default: fprintf(stderr, "unrecognized pin: %d\n", pin); break;

@@ -16,14 +16,15 @@
 #define S_MISO 9
 #define S_CLK 11
 #define S_CE0 8
-#define S_HOLD 25
-#define S_WP 24
+#define S_HOLD 26
+#define S_WP 19
 #define S_D0 S_MOSI
 #define S_D1 S_MISO
 #define S_D2 S_WP
 #define S_D3 S_HOLD
-static unsigned int F_RESET = 27;
+static unsigned int F_RESET = 25;
 #define F_DONE 17
+#define F_DRIVE 23
 
 // #define DEBUG_ICE40_PATCH
 
@@ -106,6 +107,7 @@ static int pinspec_to_pinname(char code) {
         case 's': return SP_CS;
         case 'r': return FP_RESET;
         case 'd': return FP_DONE;
+        case 'b': return FP_DRIVE;
         default: return -1;
     }
 }
@@ -125,6 +127,7 @@ static int print_pinspec(FILE *stream) {
     fprintf(stream, "   s    SPI CS         %d\n", S_CE0);
     fprintf(stream, "   r    FPGA Reset     %d\n", F_RESET);
     fprintf(stream, "   d    FPGA Done      %d\n", F_DONE);
+    fprintf(stream, "   b    FPGA Drive     %d\n", F_DRIVE);
     fprintf(stream, "For example: -g i:23    or -g d:27\n");
     return 0;
 }
@@ -226,6 +229,7 @@ int main(int argc, char **argv) {
     spiSetPin(spi, SP_CS, S_CE0);
 
     fpgaSetPin(fpga, FP_RESET, F_RESET);
+    fpgaSetPin(fpga, FP_DRIVE, F_DRIVE);
     fpgaSetPin(fpga, FP_DONE, F_DONE);
     fpgaSetPin(fpga, FP_CS, S_CE0);
 
