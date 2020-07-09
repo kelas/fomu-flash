@@ -208,13 +208,20 @@ unsigned gpioHardwareRevision(void) {
                   piPeriphBase = 0x20000000;
                   piBusAddr = 0x40000000;
                }
-               else if (strstr (buf, "ARMv7") != NULL)
+               else if (strstr (buf, "ARMv7 Processor rev 4") != NULL)
                {
                   piModel = 2;
                   chars = 6;
                   piPeriphBase = 0x3F000000;
                   piBusAddr = 0xC0000000;
                }
+	       else if (strstr (buf, "ARMv7 Processor rev 3") != NULL)
+		 {
+		   piModel = 4;
+		   chars = 6;
+		   piPeriphBase = 0xFE000000;
+		   piBusAddr = 0xC0000000;
+		 }
             }
          }
 
