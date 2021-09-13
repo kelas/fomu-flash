@@ -222,12 +222,12 @@ int main(int argc, char **argv) {
     spiSetPin(spi, SP_CLK, S_CLK);
     spiSetPin(spi, SP_D0, S_D0);
     spiSetPin(spi, SP_D1, S_D1);
-    spiSetPin(spi, SP_D2, S_D2);
-    spiSetPin(spi, SP_D3, S_D3);
+    //spiSetPin(spi, SP_D2, S_D2);
+    //spiSetPin(spi, SP_D3, S_D3);
     spiSetPin(spi, SP_MISO, S_MISO);
     spiSetPin(spi, SP_MOSI, S_MOSI);
-    spiSetPin(spi, SP_HOLD, S_HOLD);
-    spiSetPin(spi, SP_WP, S_WP);
+    //spiSetPin(spi, SP_HOLD, S_HOLD);
+    //spiSetPin(spi, SP_WP, S_WP);
     spiSetPin(spi, SP_CS, S_CE0);
 
     fpgaSetPin(fpga, FP_RESET, F_RESET);

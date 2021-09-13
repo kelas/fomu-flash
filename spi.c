@@ -96,8 +96,8 @@ static void spi_set_state(struct ff_spi *spi, enum spi_state state) {
 		gpioSetMode(spi->pins.cs, PI_OUTPUT); // CE0#
 		gpioSetMode(spi->pins.mosi, PI_OUTPUT); // MOSI
 		gpioSetMode(spi->pins.miso, PI_INPUT); // MISO
-		gpioSetMode(spi->pins.hold, PI_OUTPUT);
-		gpioSetMode(spi->pins.wp, PI_OUTPUT);
+		//gpioSetMode(spi->pins.hold, PI_OUTPUT);
+		//gpioSetMode(spi->pins.wp, PI_OUTPUT);
 		break;
 
 	case SS_DUAL_RX:
@@ -105,8 +105,8 @@ static void spi_set_state(struct ff_spi *spi, enum spi_state state) {
 		gpioSetMode(spi->pins.cs, PI_OUTPUT); // CE0#
 		gpioSetMode(spi->pins.mosi, PI_INPUT); // MOSI
 		gpioSetMode(spi->pins.miso, PI_INPUT); // MISO
-		gpioSetMode(spi->pins.hold, PI_OUTPUT);
-		gpioSetMode(spi->pins.wp, PI_OUTPUT);
+		//gpioSetMode(spi->pins.hold, PI_OUTPUT);
+		//gpioSetMode(spi->pins.wp, PI_OUTPUT);
 		break;
 
 	case SS_DUAL_TX:
@@ -114,8 +114,8 @@ static void spi_set_state(struct ff_spi *spi, enum spi_state state) {
 		gpioSetMode(spi->pins.cs, PI_OUTPUT); // CE0#
 		gpioSetMode(spi->pins.mosi, PI_OUTPUT); // MOSI
 		gpioSetMode(spi->pins.miso, PI_OUTPUT); // MISO
-		gpioSetMode(spi->pins.hold, PI_OUTPUT);
-		gpioSetMode(spi->pins.wp, PI_OUTPUT);
+		//gpioSetMode(spi->pins.hold, PI_OUTPUT);
+		//gpioSetMode(spi->pins.wp, PI_OUTPUT);
 		break;
 
 	case SS_QUAD_RX:
@@ -123,8 +123,8 @@ static void spi_set_state(struct ff_spi *spi, enum spi_state state) {
 		gpioSetMode(spi->pins.cs, PI_OUTPUT); // CE0#
 		gpioSetMode(spi->pins.mosi, PI_INPUT); // MOSI
 		gpioSetMode(spi->pins.miso, PI_INPUT); // MISO
-		gpioSetMode(spi->pins.hold, PI_INPUT);
-		gpioSetMode(spi->pins.wp, PI_INPUT);
+		//gpioSetMode(spi->pins.hold, PI_INPUT);
+		//gpioSetMode(spi->pins.wp, PI_INPUT);
 		break;
 
 	case SS_QUAD_TX:
@@ -132,8 +132,8 @@ static void spi_set_state(struct ff_spi *spi, enum spi_state state) {
 		gpioSetMode(spi->pins.cs, PI_OUTPUT); // CE0#
 		gpioSetMode(spi->pins.mosi, PI_OUTPUT); // MOSI
 		gpioSetMode(spi->pins.miso, PI_OUTPUT); // MISO
-		gpioSetMode(spi->pins.hold, PI_OUTPUT);
-		gpioSetMode(spi->pins.wp, PI_OUTPUT);
+		//gpioSetMode(spi->pins.hold, PI_OUTPUT);
+		//gpioSetMode(spi->pins.wp, PI_OUTPUT);
 		break;
 
 	case SS_HARDWARE:
@@ -141,8 +141,8 @@ static void spi_set_state(struct ff_spi *spi, enum spi_state state) {
 		gpioSetMode(spi->pins.cs, PI_INPUT); // CE0#
 		gpioSetMode(spi->pins.mosi, PI_INPUT); // MOSI
 		gpioSetMode(spi->pins.miso, PI_INPUT); // MISO
-		gpioSetMode(spi->pins.hold, PI_INPUT);
-		gpioSetMode(spi->pins.wp, PI_INPUT);
+		//gpioSetMode(spi->pins.hold, PI_INPUT);
+		//gpioSetMode(spi->pins.wp, PI_INPUT);
 		break;
 
 	default:
@@ -162,8 +162,8 @@ void spiPause(struct ff_spi *spi) {
 void spiBegin(struct ff_spi *spi) {
 	spi_set_state(spi, SS_SINGLE);
 	if ((spi->type == ST_SINGLE) || (spi->type == ST_DUAL)) {
-		gpioWrite(spi->pins.wp, 1);
-		gpioWrite(spi->pins.hold, 1);
+	  //gpioWrite(spi->pins.wp, 1);
+	  //gpioWrite(spi->pins.hold, 1);
 	}
 	gpioWrite(spi->pins.cs, 0);
 }
@@ -1009,10 +1009,10 @@ int spiInit(struct ff_spi *spi) {
 	spi_set_state(spi, SS_SINGLE);
 
 	// Have the SPI flash pay attention to us
-	gpioWrite(spi->pins.hold, 1);
+	//gpioWrite(spi->pins.hold, 1);
 
 	// Disable WP
-	gpioWrite(spi->pins.wp, 1);
+	//gpioWrite(spi->pins.wp, 1);
 
 	// Wait for CS to be 1, since the bus is shared and there's a pullup.
 	spi_wait_cs_idle(spi);
@@ -1050,14 +1050,14 @@ void spiSetPin(struct ff_spi *spi, enum spi_pin pin, int val) {
 	switch (pin) {
 	case SP_MOSI: spi->pins.mosi = val; break;
         case SP_MISO: spi->pins.miso = val; break;
-        case SP_HOLD: spi->pins.hold = val; break;
-        case SP_WP: spi->pins.wp = val; break;
+	  //case SP_HOLD: spi->pins.hold = val; break;
+	  //case SP_WP: spi->pins.wp = val; break;
         case SP_CS: spi->pins.cs = val; break;
         case SP_CLK: spi->pins.clk = val; break;
         case SP_D0: spi->pins.d0 = val; break;
         case SP_D1: spi->pins.d1 = val; break;
-        case SP_D2: spi->pins.d2 = val; break;
-        case SP_D3: spi->pins.d3 = val; break;
+	  //case SP_D2: spi->pins.d2 = val; break;
+	  //case SP_D3: spi->pins.d3 = val; break;
 	default: fprintf(stderr, "unrecognized pin: %d\n", pin); break;
 	}
 }
