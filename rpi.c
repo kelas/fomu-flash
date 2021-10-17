@@ -11,10 +11,19 @@
 #include <sys/types.h>
 #include <time.h>
 
+#ifndef FOMU_RPI64
 static volatile uint32_t piModel = 1;
 
 static volatile uint32_t piPeriphBase = 0x20000000;
 static volatile uint32_t piBusAddr = 0x40000000;
+#else
+//! a crude override of cpuinfo-based rpi model detection to support
+//! rpi4 running 64-bit kernels (i.e. arm_64bit=1 in /boot/config.txt)
+static volatile uint32_t piModel = 4;
+
+static volatile uint32_t piPeriphBase = 0xFE000000;
+static volatile uint32_t piBusAddr = 0xC0000000;
+#endif
 
 #define SYST_BASE  (piPeriphBase + 0x003000)
 #define DMA_BASE   (piPeriphBase + 0x007000)
